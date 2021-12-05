@@ -1,23 +1,32 @@
 import express from "express";
-import http from "http";
+import io from "socket.io";
+import { createServer } from "http";
 
-const app = express();
+const expressApp = express();
+const httpServer = createServer(expressApp);
 
 const PORT = 3001;
 
-app.use(express.json());
-app.listen(PORT, () => {
+expressApp.use(express.json());
+expressApp.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
 
 /* So if we want authentication, check some things on the req object, */
 /* and use some middlewares? */
-app.get("/", (req, res) => {
+expressApp.get("/", (req, res) => {
   res.send({ foo: "bar" });
 });
 
-app.get("/:name", (req, res) => {
+expressApp.get("/:name", (req, res) => {
   res.send(`Hello, ${req.params.name}`);
+});
+
+const ioServer = new io.Server(httpServer, {});
+
+ioServer.on("connection", (socket) => {
+  console.log("Socket connected!");
+  socket.emit("Hi from server!");
 });
 
 console.log("Hello world!");
