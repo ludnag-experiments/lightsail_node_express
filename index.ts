@@ -7,11 +7,6 @@ const httpServer = createServer(expressApp);
 
 const PORT = 3001;
 
-expressApp.use(express.json());
-expressApp.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
-});
-
 /* So if we want authentication, check some things on the req object, */
 /* and use some middlewares? */
 expressApp.get("/", (req, res) => {
@@ -32,6 +27,10 @@ ioServer.on("connection", (socket) => {
     console.log("received message:");
     console.log(data);
   });
+});
+
+httpServer.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
 });
 
 console.log("Hello world!");
