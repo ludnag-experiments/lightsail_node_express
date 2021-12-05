@@ -26,7 +26,12 @@ const ioServer = new io.Server(httpServer, {});
 
 ioServer.on("connection", (socket) => {
   console.log("Socket connected!");
-  socket.emit("Hi from server!");
+  socket.emit("message", "Hi from server!");
+
+  socket.on("message", (data) => {
+    console.log("received message:");
+    console.log(data);
+  });
 });
 
 console.log("Hello world!");
