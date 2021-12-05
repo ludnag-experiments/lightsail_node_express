@@ -10,6 +10,8 @@ const PORT = 3001;
 /* So if we want authentication, check some things on the req object, */
 /* and use some middlewares? */
 expressApp.get("/", (req, res) => {
+  console.log("request:");
+  console.log(req);
   res.send({ foo: "bar" });
 });
 
